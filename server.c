@@ -11,6 +11,7 @@
 #include <netdb.h>
 
 #define ERR_EXIT(a) do { perror(a); exit(1); } while(0)
+#define BUFFER_SIZE 512
 
 typedef struct {
     char hostname[512];  // server's hostname
@@ -21,7 +22,7 @@ typedef struct {
 typedef struct {
     char host[512];  // client's host
     int conn_fd;  // fd to talk with client
-    char buf[2512];  // data sent by/to client
+    char buf[BUFFER_SIZE];  // data sent by/to client
     size_t buf_len;  // bytes used by buf
     int id;
 } request;
@@ -30,18 +31,14 @@ server svr;  // server
 request* requestP = NULL;  // point to a list of requests
 int maxfd;  // size of open file descriptor table, size of request list
 
-const char* accept_read_header = "ACCEPT_FROM_READ";
-const char* accept_write_header = "ACCEPT_FROM_WRITE";
-const unsigned char IAC_IP[3] = "\xff\xf4";
-
-static void init_server(unsigned short port);
 // initailize a server, exit for error
+static void init_server(unsigned short port);
 
-static void init_request(request* reqP);
 // initailize a request instance
+static void init_request(request* reqP);
 
-static void free_request(request* reqP);
 // free resources used by a request instance
+static void free_request(request* reqP);
 
 int main(int argc, char** argv) {
 
@@ -56,7 +53,7 @@ int main(int argc, char** argv) {
 
     int conn_fd;  // fd for a new connection with client
     int file_fd;  // fd for file that we open for reading
-    char buf[2512];
+    char buf[BUFFER_SIZE];
     int buf_len;
 
     // Initialize server
@@ -94,7 +91,6 @@ int main(int argc, char** argv) {
 
 // ======================================================================================================
 // You don't need to know how the following codes are working
-#include <fcntl.h>
 
 static void init_request(request* reqP) {
     reqP->conn_fd = -1;

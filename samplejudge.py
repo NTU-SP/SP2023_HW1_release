@@ -22,7 +22,6 @@ class Checker():
         os.chdir(f"{reponame}")
         self.reponame = reponame
         self.ID = ID
-        self.status = "NotFound"
         self.score = 0
         self.punishment = 0
         self.fullscore = sum(scores)
@@ -103,7 +102,7 @@ class Server():
         except Exception as e:
             self.p.kill()
             self.p.wait()
-            raise Exception(f"Server {e}")
+            raise Exception(f"Server exit {e}")
 
 class Client():
     def __init__(self, port):
@@ -127,11 +126,11 @@ class Client():
             except Exception as e:
                 self.p.kill()
                 self.p.wait()
-                raise Exception(f"{e}")
+                raise e
                 
     def pull(self):
         try:
-            self.p.stdin.write("pull\n".encode())
+            self.p.stdin.write(b"pull\n")
             self.p.stdin.flush()
             time.sleep(timeout)
         except Exception as e:

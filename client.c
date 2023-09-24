@@ -8,12 +8,13 @@
 #include <arpa/inet.h>
 
 #define ERR_EXIT(a) do { perror(a); exit(1); } while(0)
+#define BUFFER_SIZE 512
 
 typedef struct {
     char* ip; // server's ip
     unsigned short port; // server's port
     int conn_fd; // fd to talk with server
-    char buf[2512]; // data sent by/to server
+    char buf[BUFFER_SIZE]; // data sent by/to server
     size_t buf_len; // bytes used by buf
 } client;
 
