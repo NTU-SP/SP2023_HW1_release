@@ -1,5 +1,4 @@
 from argparse import ArgumentParser
-from pathlib import Path
 import subprocess
 import socket
 import shutil
@@ -31,13 +30,7 @@ class Checker():
         os.chdir("..")
 
     def file_miss(self, files):
-        p = Path(".")
-        childs = [ch.name for ch in p.iterdir()]
-        count = 0
-        for file in files:
-            if file not in childs:
-                count += 1
-        return count
+        return len(set(files) - set(os.listdir(".")))
 
     def remove_file(self, files):
         for f in files:
