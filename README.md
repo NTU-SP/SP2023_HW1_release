@@ -11,8 +11,9 @@ python3 samplejudge.py <student_id>
 ```
 ###### Argument
 
-- -t TASK [TASK ...], --task TASK [TASK ...], Specify which tasks you want to run. If you didn't set this argument, `samplejudge.py` will run all tasks by default.
+- `-t TASK [TASK ...]`, `--task TASK [TASK ...]`, Specify which tasks you want to run. If you didn't set this argument, `samplejudge.py` will run all tasks by default.
     - Valid TASK are ["0_1", "0_2", "1_1", "1_2"].
+    - for example `python3 samplejudge.py b11902000 --task 0_1 0_2` will run both `testcase0_1` and `testcase0_2`
 
 ###### Notice
 
