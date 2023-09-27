@@ -12,22 +12,15 @@ executable = ["server", "client"]
 testpath = "../sampletestcases"
 timeout = 0.2
 parser = ArgumentParser()
-parser.add_argument("ID", type=str)
 parser.add_argument("-t", "--task", choices=["0_1", "0_2", "1_1", "1_2"], nargs="+")
 args = parser.parse_args()
 
 class Checker():
-    def __init__(self, reponame, ID):
-        os.chdir(f"{reponame}")
-        self.reponame = reponame
-        self.ID = ID
+    def __init__(self):
         self.score = 0
         self.punishment = 0
         self.fullscore = sum(scores)
         self.io = sys.stderr
-
-    def __del__(self):
-        os.chdir("..")
 
     def file_miss(self, files):
         return len(set(files) - set(os.listdir(".")))
@@ -314,4 +307,4 @@ if __name__ == "__main__":
         task.sort()
         testcases = [testcases[i] for i in task]
         scores = [scores[i] for i in task]
-    Checker(args.ID, args.ID).run()
+    Checker().run()
