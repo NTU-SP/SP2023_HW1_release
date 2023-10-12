@@ -239,8 +239,6 @@ def read_record(filename="./BulletinBoard"):
     rec = []
     with open(filename, "rb") as f:
         content = f.read()
-        if len(content) == 0:
-            return [{"FROM":"", "CONTENT":""} for _ in range(10)]
         for i in range(0, len(content), 25):
             f = ""
             for ch in content[i:i+5]:
@@ -253,6 +251,8 @@ def read_record(filename="./BulletinBoard"):
                     break
                 c += chr(ch)
             rec.append({"FROM":f, "CONTENT":c})
+        for _ in range(len(rec), 10):
+            rec.append({"FROM":"", "CONTENT":""})
     return rec
 
 def record_lock(f, idx):
